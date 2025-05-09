@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}GhostGuard - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="text-center">Welcome to GhostGuard</h1>
+        <p class="text-center">Your protection against accidental file deletion and insider threats.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Your Files</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td>{{ file.name }}</td>
+                    <td>
+                        <a href="{{ url_for('main.restore', file_id=file.id) }}" class="btn btn-warning">Restore</a>
+                        <a href="{{ url_for('main.download', file_id=file.id) }}" class="btn btn-info">Download</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2" class="text-center">No files found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Configuration</h3>
+        <p>Set up your file/folder monitoring and protection settings below.</p>
+        <a href="{{ url_for('main.config') }}" class="btn btn-primary btn-lg w-100">Configure</a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>System Status</h3>
+        <p>Ensure your file protection is actively running.</p>
+        <p>Status: <span class="badge bg-success">Active</span></p>
+    </div>
+</div>
+
+{% block additional_js %}
+<script>
+    // Example JavaScript to show notifications or interactive elements (AJAX, etc.)
+</script>
+{% endblock %}
+{% endblock %}

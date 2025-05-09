@@ -1,6 +1,8 @@
 import os
+from persistence import Persistence
 from file_interceptor import FileInterceptor
 from cryptography.fernet import Fernet
+
 
 def generate_key():
     # Define the path where the key should be saved
@@ -20,6 +22,7 @@ def generate_key():
     else:
         print(f"Key already exists at {key_path}")
 
+
 def main():
     # Ensure the key is generated before starting the file monitoring
     generate_key()
@@ -38,6 +41,12 @@ def main():
     # Start watching for file events
     print(f"Starting to monitor {watch_directory} for file deletions...")
     interceptor.watch()
+
+    # Setup persistence to ensure app is always running
+    persistence = Persistence()
+    persistence.setup()
+    persistence.monitor_self()
+
 
 if __name__ == "__main__":
     main()
